@@ -1,0 +1,24 @@
+git init .\desenvolvimento-javascript\
+git config --global user.name "Marciano Antoniolli"
+git config --global user.email "marcianoantoniolli@icloud.com"
+
+echo "MEU REPOSITORIO DAS ATIVIDADES DO CUDO DE DJS" > readme.md
+echo "Suporte universal. Todos os navegadores da Web modernos e populares suportam JavaScript com interpretadores integrados.Imperativa e estruturada. ...Dinâmica.Tipagem dinâmica. ...Baseada em objetos. ...Avaliação em tempo de execução. ...Funcional.Funções de primeira classe." > anotacoes.txt
+git add .\readme.md .\anotacoes.txt
+git status
+git commit -m "gerando comite arquivos anotações.txt e readme.md"
+git status
+git remote add origin https://github.com/antoniollimarciano/DESENVOLVIMENTO_JAVA_SCRIPT.git
+git branch
+git push -u origin main
+echo "JAVA ESTA SENDO MUITO IMPORTE PARA MEU CONHECIMENTO PARA ATUALIZAÇÃO DAS MINHAS LINGUAGENS " >> anotacoes.txt
+git add .\anotacoes.txt
+git commit -m "atualizando o arquivo anotações.txt" 
+git push -u origin main  
+git clone https://github.com/antoniollimarciano/DESENVOLVIMENTO_JAVA_SCRIPT.git    
+cd .\DESENVOLVIMENTO_JAVA_SCRIPT\
+git push -u origin main
+echo "projeto by Marciano Moreira de Souza Antoniolli" >> anotacoes.txt
+git add .
+git commit -m "adicionado meu nome como mentor do projeto"
+
