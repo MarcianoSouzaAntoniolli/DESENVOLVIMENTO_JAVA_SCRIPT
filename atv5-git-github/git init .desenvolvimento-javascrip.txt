@@ -20,5 +20,5 @@ cd .\DESENVOLVIMENTO_JAVA_SCRIPT\
 git push -u origin main
 echo "projeto by Marciano Moreira de Souza Antoniolli" >> anotacoes.txt
 git add .
-git commit -m "adicionado meu nome como mentor do projeto"
+git commit -m "adicionado meu nome como mentor do projeto novo"
 
