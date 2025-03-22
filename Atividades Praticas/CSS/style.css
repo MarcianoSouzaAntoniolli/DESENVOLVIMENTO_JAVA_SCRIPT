@@ -1,0 +1,32 @@
+body {
+    background-color: rgba(213, 227, 235, 0.514);
+}
+
+h1 {
+    color: rgb(12, 26, 223);
+    padding: 60px;
+}
+
+p {
+    font-size: 30px;
+    
+}
+
+#paragrafo2{
+    color: rgb(255, 0, 0);
+}
+
+.paragrafo3{
+    color: rgb(55, 0, 255);
+}
+
+.paragrafo4{
+    color: rgb(255, 0, 212);
+    font-size: 35px;
+    background-color: rgb(233, 245, 130);
+    font-style: italic;
+}
+
+.margem{
+    margin: 30px;
+}
