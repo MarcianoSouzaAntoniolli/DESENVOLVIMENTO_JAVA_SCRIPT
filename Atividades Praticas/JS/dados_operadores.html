@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXEMPLO DE TIPO DE DADOS E OPERADORES</title>
+</head>
+<body>
+    <h1>Exemplo de Tipo de Dados e Operadores</h1>
+
+    <script>
+        var nome    = "MARCIANO MOREIRA DE SOUZA ANTONIOLLI";
+        var m_mesg  = "Ola mundo!!";
+        var m_texto = "Hoje e Aula de Java Scrip com o professo Lucas";
+
+        console.log("String: ", nome, m_mesg, m_texto);
+     
+        //Variavel Numerica
+        var idade    = 37;
+        var altura   = 1.65;
+        var peso     = 75.00;
+        var negativo = -25;  
+        
+        console.log("Numericos: ",idade,altura.toFixed(3),peso,negativo)
+
+        //Booleanos
+
+        var verdade     = true;
+        var falso       = false;
+        var idade       = 18;
+        var maior_idade = idade >= 18;
+        var menor_idade = idade < 18;  
+
+        console.log("Maioridade: ", maior_idade, "Menor Idade: ",menor_idade);
+
+        //Iguadades
+        var igualdade          = (10 == "10");
+        var igualdadeValorTipo = (10 === "10");
+        
+        console.log(igualdade,igualdadeValorTipo);
+        console.log(typeof idade,typeof igualdade);
+
+       //Null valor nullo
+       var valornulo = null;
+       console.log(valornulo);
+
+       //Operadore Aritimeticos
+       var a = 10;
+       var b = 5;
+       var soma = a + b;
+       var subt = a - b;
+       var mult = a * b;
+       var div  = a / b;
+       console.log("Soma é: ", soma);
+       console.log("Subtração é: ", subt);
+       console.log("Multiplicação é: ", mult);
+       console.log("Divisão é: ", div);
+       
+       var  modulo   = a %  b;
+       var potencia  = a ** b;
+       a++;
+       b--;
+       console.log("Moduli é: ", modulo);
+       console.log("Potenciaé: ", potencia);
+       console.log("Incremento é: ", a);
+       console.log("Decremento é: ", b);
+      
+       //Operadore de atribuição combinadas
+       var num = 5;
+       //num = num + 2;
+       num +=2;
+       console.log(num); //7
+
+       num -= 2;
+       console.log(num); //5
+
+       num *=3;
+       console.log(num); //15
+
+       num /=3;
+       console.log(num); //5
+
+       num %=3;
+       console.log(num); //2
+
+       //Conversoes
+
+       ///String Para number
+       var num_texto    = "42.2";
+       var conv_inteiro = parseInt(num_texto);
+       var con_float    = parseFloat(num_texto);
+       var conv_number  = Number(num_texto);
+
+       console.log("Str: ", num_texto);
+       console.log("Int: ", conv_inteiro);
+       console.log("Float: ", con_float);
+       console.log("Number: ", conv_number);
+
+       //Number -> string
+
+       var numero    = 1987
+       var con_str   = numero.toString();
+       var con_str2  = String(numero);
+       var con_str3  = "" + numero;
+
+       console.log("Numro: ", num_texto);
+       console.log("Str1: ", con_str);
+       console.log("Str2: ", con_str2);
+       console.log("Str3: ", con_str3);
+
+       console.log("Numro: ", typeof numero);
+       console.log("Str1: ", typeof con_str);
+       console.log("Str2: ", typeof con_str2);
+       console.log("Str3: ", typeof con_str3);
+
+       //String -> Boolean
+
+       var numPositivo = 42;
+       var numZero     = 0;
+       var numNegativo = 10;
+
+       var numPositivo  = Boolean(numPositivo);
+       var numZero      = Boolean(numZero);
+       var numNegativo  = Boolean(numPositivo);    
+       
+       console.log("positivo: ", numPositivo);
+       console.log("zero: ", numZero);
+       console.log("negativo: ", numNegativo);
+      
+       //String -> boolean
+       var textoVerdade = "true";
+       var textoFalso   = "false";
+       var textoVazio   = "";
+       var strtobool1      = Boolean(textoVerdade);
+       var strtobool2      = Boolean(textoFalso);
+       var strtobool3      = Boolean(textoVazio);
+
+       console.log("CONV 1 : ", strtobool1);
+       console.log("CONV 2 : ", strtobool2);
+       console.log("CONV 3 :", strtobool3);
+
+       //Boolean -> String
+       var verdadeiro   = true;
+       var falso   = false;
+       var textoVazio   = "";
+       var boltostr1      = verdadeiro.toString(verdadeiro);
+       var boltostr2      = String(falso);
+       
+       console.log("CONV 1 : ", boltostr1);
+       console.log("CONV 2 : ", boltostr2);
+
+       //Prompt
+
+       var nomecompleto = prompt("Digite seu nome Completo: "); //Pede uma interação do usuário
+       console.log("Nome: ", nomecompleto); //Exibe a mensagem 
+       alert(nomecompleto); //Exibe um Caixa de alerta
+
+
+    </script>
+</body>
+</html>
