@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXERCICIO DE OPERADORES</title>
+</head>
+<body>
+    <h1>Exercicios de Operadores Aula JavaScrit</h1>
+    <p></p>
+   
+    <SCRipt>
+        alert("1- Crie um script que receba dois números e exiba a soma deles."); 
+        var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+        var numrero2 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+        resultado = numrero1 + numrero2;
+        console.log("O RESUTADO DA SOMA É :",resultado);        
+    </SCRipt>
+
+    <SCRipt>
+        alert("2- Crie um script que receba dois números e exiba a diferença entre eles (primeiro - segundo)."); 
+        var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+        var numrero2 = parseInt(prompt("Informe o Segundo Numero: ")); //Pede uma interação do usuário
+        resultado = numrero1 - numrero2;
+        console.log("Diferenca entre os dois numeros é :",resultado);        
+    </SCRipt>
+
+    <SCRipt>
+        alert("3- Crie um script que receba dois números e exiba o resultado da multiplicação (primeiro * segundo)."); 
+        var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+        var numrero2 = parseInt(prompt("Informe o Segundo Numero: ")); //Pede uma interação do usuário
+        resultado = numrero1 * numrero2;
+        console.log("Mutiplicação entre os dois numeros é :",resultado);        
+    </SCRipt>
+    
+    <SCRipt>
+        alert("4- Crie um script que receba dois números e exiba o resultado da divisão (primeiro ÷ segundo)."); 
+        var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+        var numrero2 = parseInt(prompt("Informe o Segundo Numero: ")); //Pede uma interação do usuário
+        resultado = numrero1 / numrero2;
+        console.log("Divisao entre os dois numeros é :",resultado);        
+    </SCRipt>
+
+    <SCRipt>
+        alert("5- Crie um script que receba dois números e exiba o resto da divisão entre eles (primeiro % segundo)."); 
+        var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+        var numrero2 = parseInt(prompt("Informe o Segundo Numero: ")); //Pede uma interação do usuário
+        resultado = numrero1 % 2;
+        console.log("O Resto da divisaoé :",resultado);        
+    </SCRipt>
+
+    <SCRipt>
+        alert("6- Crie um script que receba um número e mostre seu sucessor."); 
+        var numero1 = parseInt(prompt("Informe um Numero Inteiro: ")); //Pede uma interação do usuário
+        numero1++;
+        console.log("O sucessor é :",numero1);        
+    </SCRipt>
+
+    <SCRipt>
+        alert("7- Crie um script que receba um número e mostre seu antecessor."); 
+        var numero1 = parseInt(prompt("Informe um Numero Inteiro: ")); //Pede uma interação do usuário
+        numero1--;
+        console.log("O Antecessor é :",numero1);        
+    </SCRipt>
+
+    <SCRipt>
+        alert("8- Crie um script que receba três números e exiba a soma de todos."); 
+        var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+        var numrero2 = parseInt(prompt("Informe o Segundo Numero: ")); //Pede uma interação do usuário
+        var numrero3 = parseInt(prompt("Informe o Terceiro Numero: ")); //Pede uma interação do usuário
+        resultado = numrero1 + numrero2 + numrero3 ;
+        console.log("A soma dos 3 numeros é :",resultado);        
+    </SCRipt>
+    <SCRipt>
+        alert("9- Crie um script que receba três números e calcule a média deles."); 
+        var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+        var numrero2 = parseInt(prompt("Informe o Segundo Numero: ")); //Pede uma interação do usuário
+        var numrero3 = parseInt(prompt("Informe o Terceiro Numero: ")); //Pede uma interação do usuário
+        resultado = (numrero1 + numrero2 + numrero3) / 3 ;
+        console.log("A média dos 3 numeros é :",resultado);        
+    </SCRipt> 
+    
+    <SCRipt>
+        alert("10- Crie um script que calcule a área de um círculo dado o valor de seu raio (fórmula: A = π (3.14) * r²)."); 
+        var raio  = parseFloat(prompt("Informe o Valor do Raio: ")); //Pede uma interação do usuário
+        var pi    = 3.14
+        resultado = 3.14*(raio**2) ;
+        console.log("A média dos 3 numeros é :",resultado);        
+    </SCRipt> 
+    <script>
+        alert("11- Crie um script que leia a idade de uma pessoa e exiba e retorno (true or false)."); 
+        var idade  = parseInt(prompt("Informe sua Idade: ")); //Pede uma interação do usuário
+        resutado   = idade >= 18;
+        console.log(resutado);          
+    </script> 
+    
+    <script>
+        alert("12- Crie um script que receba um número e exiba se ele é positivo, negativo ou zero (true or false) de cada um dos 3 tipos."); 
+        var numero  = parseInt(prompt("Informe numero: ")); 
+        positivo    = numero > 0;
+        negativo    = numero < 0;
+        zero        = numero == 0;
+        console.log("Numero e Positivo:",positivo);  
+        console.log("Numero e Negativo:",negativo);
+        console.log("Numero e Zero:",zero);        
+    </script> 
+    <script>
+         alert("13- Crie um script que verifique se um número é par (true or false)."); 
+        var numero  = parseInt(prompt("Informe numero: ")); 
+        resultado   =  numero % 2 ;
+        par         = resultado == 0;
+        impar       = resultado != 0;
+
+        console.log("Numero e par: ",par);  
+        console.log("Numero e Impar: ",impar);  
+        
+    </script>
+    <script>
+       alert("14- Crie um script que receba dois números e exiba se o primeiro é maior que o segundo. (true or false).");   
+       var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+       var numrero2 = parseInt(prompt("Informe o Segundo Numero: ")); //Pede uma interação do usuário
+       resultado   =  numrero1 > numrero2 ;
+       console.log("O 1º numero ",numrero1,"e maior 2º: ",numrero2, " Reustado é :",resultado);      
+       
+   </script>
+   <script>
+       alert("15- Crie um script que verifique se um número está entre 10 e 20. (true or false).");   
+       var numrero1 = parseInt(prompt("Informe o Primeiro Numero: ")); //Pede uma interação do usuário
+       
+       resultado   =  numrero1 >= 10 &&  numrero1 <= 20;
+          
+
+       console.log("O numero está entre 10 e 20: ",resultado);      
+       
+   </script>   
+
+</body>
+</html>
