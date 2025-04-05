@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXEMPLO DE CONDICIONAIS</title>
+</head>
+<body>
+    <h1>EXEMPLO DE CONDICIONAIS</h1>
+    
+    <script>
+        var idade = 75;
+        if (idade < 18) {
+            console.log("Pessoa Menor de Idade. ");
+        }else {
+            console.log("Pessoa Maior de Idade. " );
+        }
+
+        if (idade < 18) {
+            console.log("Menor de Idade. ");
+        }else if (idade === 18){
+            console.log("Tem 18 anos" );
+        }else {
+            console.log("Mais de 18 anos" );
+        }
+
+        var nota  = 7;
+        var falta = 5;
+
+        if (nota >=7 || falta <= 4){
+            console.log("Aluno Aprovado..");
+        }else{
+            console.log("Aluno Reprovado..");
+        }
+
+        if (nota >=7 && falta <= 4){
+            console.log("Aluno Aprovado..");
+        }else{
+            console.log("Aluno Reprovado..");
+        }
+
+        var nome = "Marciano Antoniolli";
+        
+        if (nome){
+            console.log(nome);        
+        } else{
+            console.log("Nome não informado!!!");
+        }
+
+        var nome     = "Marciano Moreira de Souza";
+        var mensagem = "";
+
+        if (nome){
+            mensagem = nome;        
+        } else{
+            mensagem = "Nome não Informado!!"
+        }
+        console.log(mensagem);
+
+        mensagem = nome ? nome : "Nome não Informado Ternário!!";
+        console.log(mensagem);
+
+        var nome  = "Marci";
+        var idade = 37;
+
+        if (nome){
+            if (idade >= 18){
+                console.log("Nome: " +nome,"Idade: "+idade)
+            }else{
+                console.log("Nome: " +nome)
+            }
+        }else {
+            console.log("Nome está Vazio!!")
+        }
+
+        var categoria = "4";
+
+        switch (categoria){
+            case "1" : 
+                console.log("R$ 11,22");
+                break;
+            case "2" : 
+                console.log("R$ 21,22");
+                break;
+            case "3" : 
+                console.log("R$ 31,22");
+                break;
+            case "4" : 
+                console.log("R$ 41,22");
+                break;
+            default : 
+              console.log("Categoria Libre, Cancela Liberada");
+
+
+        }
+
+
+    </script>
+
+</body>
+</html>

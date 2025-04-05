@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 8 Js Condicionais</title>
+</head>
+<body>
+    <h1>Atividade 8 Js Condicionais</h1>
+
+    <script>
+        //Exercicio 01 - Verificar se numero e maior que 10
+        var numnero = 10;
+        if (numnero > 10){
+            console.log("Numero maior "+numero);
+        }else {
+            console.log("Numero menor "+numero);
+        }
+
+        //Exercicio 02 - Verificar se numero e par
+
+        var numero = 25
+        if (numero % 2 ===0) {
+            console.log("Numero e Par "+numero);
+        } else{
+            console.log("Numero e Impar "+numero);
+        }
+
+        //Exercicio 03 - Qual maior e o menor numero
+
+        var numero1 = 100;
+        var numero2 = 32;
+        var numero3 = 322;
+
+        if (numero1 > numero2 && numero1 > numero3){
+            console.log("Numero "+numero1 + " é o maior numero");
+            if (numero2 < numero3){
+                console.log("Numero "+numero2 + " é o menor numero");
+            }
+            else {
+                console.log("Numero "+numero3 + " é o menor numero") ;
+            }
+        }else if (numero2 > numero1 && numero2 > numero3){
+            console.log("Numero "+numero2 + " é o maior numero");
+            if (numero1 < numero3){
+                console.log("Numero "+numero1 + " é o menor numero") ;           
+            }else {
+                console.log("Numero "+numero3 + " é o menor numero") ;
+            }
+        }
+        else if (numero3 > numero1 && numero3 > numero2){
+            console.log("Numero "+numero3 + " é o maior numero");
+            if (numero1 < numero2){
+                console.log("Numero "+numero1 + " é o menor numero") ;           
+            }else {
+                console.log("Numero "+numero2 + " é o menor numero") ;
+            } 
+        }
+       
+        //Exercicio 04 - calculadora simples
+        var operaracao = prompt("Informe um operação [+Soma,-Subtração,*Multiplicação,/Divisao]: ");
+        var numero1 = 20;
+        var numero2 = 3;
+       
+
+        switch (operaracao){
+            case "+" :
+                console.log("+ Soma: "+ (numero1+numero2)) ;
+                break;
+            case "-":
+                console.log("- Subtração: "+ (numero1-numero2)) ;
+                break;
+            case "*":
+                console.log("* Multiplicação: "+ (numero1*numero2)) ;
+                break;
+            case "/":
+                console.log("* Multiplicação: "+ (numero1/numero2)) ;
+                break;
+            default:
+                console.log("Operação Inválida");
+
+        }
+    </script>
+</body>
+</html>
