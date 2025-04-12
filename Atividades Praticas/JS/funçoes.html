@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUNÇOES HTML - EXEMPLOS</title>
+</head>
+<body>
+    <h1>Funções em HTML - EXEMPLOS</h1>
+
+    <script>
+        function mesg(){
+            console.log("hello word!! Aula top");
+        }
+        mesg();
+
+        function mesgArgumento(nome){
+            console.log("Meu Nome é : ",nome);
+        }
+        mesgArgumento("MARCIANO MOREIRA DE SOUZA ANTONIOLLI");
+       
+       
+       
+        //FUNCÃO COM VALORES DEFAULT OPCIONAIS 
+        function mesgOpcional(nome,saudacao ="Seja Bem Vindo!!"){
+            console.log("Meu Nome é : ",nome," " ,saudacao);
+        }
+        mesgOpcional("MARCIANO MOREIRA DE SOUZA ANTONIOLLI");
+        mesgOpcional("MARCIANO MOREIRA DE SOUZA ANTONIOLLI", "PARABÉNS VC FOI APROVADO!!");
+
+
+
+        //
+        function somar(numero1,numero2){
+            //console.log("Soma: ",numero1+numero2);
+            console.log(`SOMA DE ${numero1} + ${numero2} = ${numero1+numero2}`);
+        }
+        somar(10,20);
+
+
+       //função com retorno do valor
+        function somarreturn(numero1,numero2){
+            //console.log("Soma: ",numero1+numero2);
+            return(numero1+numero2);
+        }
+        var retorno = somarreturn(10,20);
+        console.log(retorno);
+
+
+
+        //funcao media
+        function media(n1,n2,n3){
+            return((n1+n2+n3)/3);
+        }
+        console.log(media(10,10,10));
+        
+
+
+         //funcao media 2
+         function media(n1,n2,n3){
+            return((n1+n2+n3)/3);
+        }
+        result =  media(10,10,10);
+        if (result >= 7){
+            console.log("VOCE ESTA APROVADO")
+        }else {
+            console.log("VOCE ESTA REPROVADO")
+        }
+
+
+        //CRIANDO UM CALCULADORA
+        function calculadora(numero1,numero2,operador = "+"){
+            if (operador=="+"){
+                return(numero1+numero2);
+            }else if (operador=="-"){
+                return(numero1-numero2);
+            }else if (operador=="*"){
+                return(numero1*numero2);
+            }else if (operador=="/"){
+                return(numero1/numero2);
+            }else{
+                return("operação inválida")
+            }
+            
+            
+        }        
+        var resultado = calculadora(10,20,"-");
+        console.log(resultado)
+
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AULA SOBRE REPETIÇÕES</title>
+</head>
+<body>
+    <H1>ESTRUTURA DE REPETIÇÕES</H1>
+
+    <script>
+        //var a declaração ; a < 5 codidição, a++ incremento
+        for(var b = 0; b<= 10; b++){
+            console.log("Repetição com for: ",b);
+        }
+       
+         //var a declaração ; a < 5 codidição, a+=2 incremento 2 em 2
+         for(var i = 0; i <= 10; i+=2){
+            console.log("Repetição com for: ",i);
+        }
+
+
+         //var a declaração ; a < 5 codidição, a+=2 incremento 2 em 2 pares
+         for(var i = 0; i <= 10; i+=2){
+            console.log("Repetição com for: ",i);
+        }
+
+         //var a declaração ; a < 5 codidição, a+=2 incremento 2 em 2 impares
+         for(var i = 1; i <= 10; i+=2){
+            console.log("Repetição com for: ",i);
+        }
+        
+
+        alunos = ["Josi","Marci","Jairo","Nilza"];
+        for(var i = 0; i < alunos.lenght; i++){
+            console.log(alunos[i]);
+        }
+
+
+
+        for (var aluno of alunos){
+            console.log(aluno);
+        }
+
+
+        //deletar
+        delete alunos[0];
+        for (var aluno of alunos){
+            console.log(aluno);
+        }
+
+        var carro = {
+            "ano" : "2025",
+            "modelo" : "ferrari",
+            "cor" : "vermelho"
+
+        }
+
+        for (var chave in carro){
+            console.log(carro[chave]);
+        }
+
+
+        var contador = 0 ;
+        while (contador < 5 ){
+            console.log(contador);
+            contador++;
+            if (contador == 3){
+                break;
+            }
+        }
+
+
+
+        numero = 0;
+        soma   = 0;
+        while (numero <= 10){
+            //soma = soma + numero;
+            numero++;
+            soma += numero;
+            console.log("Numero: ",numero, " Soma = ",soma);
+            
+        } 
+        console.log("Numero: ",numero, " Soma = ",soma);
+
+
+        var x = 0;
+        while (x <= 20){
+            if (x == 5){
+                break;
+            }
+            console.log(x);
+            x++;
+        }
+
+        var y = 0;
+        while (y <= 20){
+            if (y == 5){
+                y++;
+                continue;
+
+            }
+            console.log(y);
+            y++;
+        }
+
+        //imprime apenas impares
+        var y = 0;
+        while (y <= 20){
+            if (y % 2 == 0){
+                y++;
+                continue;
+
+            }
+            console.log(y);
+            y++;
+        }
+
+
+        //imprime apenas pares
+        var y = 0;
+        while (y <= 20){
+            if (y % 2 != 0){
+                y++;
+                continue;
+
+            }
+            console.log(y);
+            y++;
+        }
+
+
+        var count = 10;
+        do {
+            console.log(count);
+            count++;
+
+
+        }while (count < 5);
+
+
+        
+    </script>
+</body>
+</html>

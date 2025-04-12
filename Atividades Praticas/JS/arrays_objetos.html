@@ -16,11 +16,77 @@
         
         frutas.push("Mamão");
         console.log(frutas);
-
+        
         frutas[1] = "Abacate";
         console.log(frutas); 
 
         console.log("Ultimo Item Adicionado a Lista: ",frutas[frutas.length-1]);
+        
+        //insere na lista na primeira posição
+        frutas.unshift("Pera");
+
+        console.log(frutas);
+        
+        //deleta ultimo
+        frutas.pop();
+        console.log(frutas);
+
+        //deleta primeiro
+        frutas.shift();
+         console.log(frutas); 
+
+         //deleta posição especifica
+         // posição inicial e quantos vai remover
+        frutas.splice(1,2);
+         console.log(frutas); 
+
+         //recolocar o itens
+         // posição que quero alterar "1"  quantos vai remover "0" ,  que vai inserir "Caqui"
+        frutas.splice(1,0,"Caqui");
+        console.log(frutas); 
+
+        //imprimir a por posição inicial "0" e quantidade de casas "2"
+         console.log(frutas.slice(0,2)); 
+         
+         //Pesquisa na lista se achar ele retorna com true se achou
+         console.log(frutas.includes("Caqui"));
+        
+         //Pesquisa na lista se achar ele retorna a posição que esta o caqui
+         console.log(frutas.indexOf("Caqui"));
+
+
+         //Objetos class pessoa
+
+         var pessoa = {
+            "nome"       : "Marciano Antoniolli",
+            "idade"      : "37",
+            "data_nasc"  : "23/11/1987",
+            "peso"       : 75.00,  
+            "altura"     : 1.63,  
+            "cpf   "     : 1.63,  
+         }
+
+         console.log(pessoa);
+         console.log(pessoa.nome);
+         console.log(pessoa["nome"]);
+
+         //adiciona chave no objeto
+         pessoa.cidade = "Presidente Prudente";
+         console.log(pessoa);
+         
+         //deleta a chave cidade
+         delete pessoa.cidade;
+         console.log(pessoa);
+
+         //pesquisar no meu objeto retorna true ou false
+         console.log("nome" in pessoa);
+         
+         //retorna apena os valores das chaves
+         console.log(Object.values(pessoa));
+
+         //pesquisa e retor se tem no objeto
+         console.log(Object.values(pessoa).includes("Marciano Antoniolli"));
+
 
     </script>
 </body>
