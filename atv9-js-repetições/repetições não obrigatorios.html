@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXERCICIOS REPETIÇÕES NÃO OBRIGATORIOS</title>
+</head>
+<body>
+    <h1>EXERCICIOS REPETIÇÕES NÃO OBRIGATORIOS</h1>
+
+    <script>
+        //JS - Repetições - Não obrigatório
+        //1. Lista de compras Crie um array com 5 itens e use um loop for para exibir cada um deles.
+       
+        lista_compra = ["1-TOMATE","2-LEITE","3-PERA","4-MAÇA",]
+
+        //Contagem Regressiva de 10 ate 0
+        var contador = 10;
+        while(contador >-1 ){
+            console.log(contador);
+            contador--;
+        }
+        
+
+        console.log("");
+        console.log("TABUADA 7");
+        var result = 0;
+        for (var i=0; i<=10;i++){
+            result = 7 * i;
+            console.log(" 7 x ",i, " = " ,result);
+
+        }
+
+        console.log("");
+        console.log("TABUADA 9");
+        var result   = 0;
+        var contador = 0;
+        while (contador<=10){
+            result = 9 * contador;
+            console.log(` 9 x ${contador} = ${result}`);
+            contador++;
+
+        }
+
+        console.log("");
+        console.log("Mostrar os numero pares de 0 ate 50 exceto 10 e 10");
+        var contador = 0;
+        while (contador<=50){
+            if (contador % 2 == 0  && contador != 10 &&  contador != 20   ){
+                console.log(`Par: ${contador} `); 
+            }
+            contador++;
+
+        }
+
+        console.log("");
+        console.log("Mostrar os numero pares de 0 ate 50 exceto 10 e 10"); 
+        var contador = 0;
+        while (contador<=50){
+            if (contador == 10 ||  contador == 20   ){
+                contador++;
+                continue; 
+            }
+            console.log(`Par: ${contador} `); 
+            contador++;
+
+        }
+
+        //Mostrar os numero pares de 0 ate 50 exceto 10 e 10
+    </script>
+</body>
+</html>

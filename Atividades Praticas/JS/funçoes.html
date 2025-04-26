@@ -87,7 +87,24 @@
         var resultado = calculadora(10,20,"-");
         console.log(resultado)
 
-        
+        //verificar aprovação aluno
+
+        // nota >= 7.00 e faltas <= 4 faltas para estar aprovado
+
+        function verificar_aprovacao(n1,n2,n3,numfaltas){
+            var media = (n1+n2)/2;
+            if (media >= 7.0 && numfaltas <= 4){
+                return "Aluno Esta Aprovado!!"
+            }
+             else {
+                return "Aluno Esta Rprovado!!";
+            }
+
+        }
+
+        console.log("Aluno Marciano está: ",verificar_aprovacao(10,8,5,3));
+        console.log("Aluno Marciano está: ",verificar_aprovacao(10,8,5,5));
+        console.log("Aluno Marciano está: ",verificar_aprovacao(4,8,5,2));
 
     </script>
 </body>

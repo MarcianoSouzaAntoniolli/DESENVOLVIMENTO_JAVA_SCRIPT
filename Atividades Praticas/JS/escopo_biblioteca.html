@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESCOPO E BIBLIOTECAS</title>
+</head>
+<body>
+    <H1>Escopo e BIBLIOTECAS</H1>
+    <script>
+         // var para declarar variaveis e substui o valor
+        
+         function exemploVar(){
+            var x = 10;
+
+            if (1 == 1){
+              var a = 20;
+              console.log(`Dentro do IF meu X vale ${x}`);    
+            }
+            console.log(`Dentro do IF meu X vale ${x}`);    
+
+         }
+
+         exemploVar();
+
+
+        //  let para declarar variaveis não permit criar variaves com mesmo nome no mesmo bloco
+        
+        function exemplolet(){
+            let x = 10;
+
+            if (1 == 1){
+              let x = 20;
+              console.log(`Dentro do IF meu X vale ${x}`);    
+            }
+            console.log(`Dentro do IF meu X vale ${x}`);    
+
+         }
+
+         exemplolet();
+         
+
+         var nome = "Lucas";
+         var nome = "Marciano";
+
+         let idade = 44;
+         //let idade = 37; // não permite como let
+
+         
+         const pi = 3.1415;
+         //pi = 2.316; // não permite trocar o valor PI pois const e se altera valor
+
+         //mas quando eu coloco a const como objeto posso alterar seu objeto
+
+         const pessoa = {nome: "Maria"};
+         console.log(pessoa);
+         pessoa.nome = "Marciano";
+         console.log(pessoa);
+         
+
+         //Bibliotecas
+
+
+      
+
+    </script>
+</body>
+</html>
