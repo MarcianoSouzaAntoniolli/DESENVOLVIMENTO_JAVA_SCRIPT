@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Exempolos de DOM</title>
+</head>
+<body>
+    <h1 id="titulo">Olá DOM!</h1>
+    <h1 class="titulo">Olá DOM!</h1>
+    
+    <button onclick="mudarTexto()">Alterar Texto</button>
+
+    <h3>Lista de Itens</h3>
+
+    <ul id="lista"> 
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+    </ul>
+
+    <input type="text" nome="Novo Item" id="novoitem">
+    
+    <button onclick="additem()">Inserir Item</button>
+    <button onclick="delitem()">Remover Item</button>
+
+    <h3>Alterar cores de fundos</h3>
+    <button onclick="alterarFundoCor('lightgreen')">Verde</button>
+    <button onclick="alterarFundoCor('lightblue')">Azul</button>
+    <button onclick="alterarFundoCor('lightyellow')">Amarelo</button>
+
+    <script>
+        
+        function mudarTexto(){
+            document.getElementById("titulo").textContent = "Aula de Java Script top!! Alterado pelo ID";
+            document.getElementsByClassName("titulo")[0].textContent = "Professor Lucas!! Alterado pelo CLASS";
+        }
+
+        function additem(){
+            var texto = document.getElementById("novoitem").value;
+            if (texto.trim()!=""){
+                var li = document.createElement("li");
+                li.textContent = texto.trim();
+                document.getElementById("lista").appendChild(li);
+                document.getElementById("novoitem").value = "";
+            }  
+            else{
+                alert("Digite um texto valido para inserir");
+            }      
+        }
+
+        function delitem(){
+            var lista = document.getElementById("lista");
+            if (lista.lastElementChild){
+                lista.removeChild(lista.lastElementChild);
+            }
+            else{
+                alert("Não existe mais itens a serem removidos");
+            }
+        }
+
+        function alterarFundoCor(cor){
+           document.body.style.backgroundColor = cor; 
+        }
+
+    </script>
+</body>
+</html>

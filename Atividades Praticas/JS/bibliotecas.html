@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Exemplo Bibliotecas</h1>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+    <script>
+        //Biblioteca Math Inicio
+
+
+        var numero =  parseFloat(prompt("Informe um numero Real: "));
+        console.log("Arredondamento para Baixo ", Math.floor(numero));
+        console.log("Arredondamento para Cima ", Math.ceil(numero));
+        console.log("Arredondamento para Mais Proximo ", Math.round(numero));
+
+        var array = [10,15,30,12,5,6,2];
+        console.log("Maior valor ", Math.max(...array));
+        console.log("Maior valor 2 ", Math.max(10,20,30,40,50,60,11,12));
+
+        console.log("Menor valor ", Math.min(...array));
+        console.log("Menor valor 2 ", Math.min(10,20,30,40,50,60,11,12));
+
+        console.log("Raiz quadrada sem biblioteca ", 16**0.5);
+        console.log("Raiz quadrada com a biblioteca ", Math.sqrt(16));
+
+        console.log("Potencia quadrada sem biblioteca ", 8**2);
+        console.log("Potencia quadrada com a biblioteca ", Math.pow(8,2));
+
+        console.log("Valor PI ", Math.PI);
+
+        console.log("Valor PI ", Math.PI.toFixed(2));
+
+        //Biblioteca Math FIM
+
+
+        //Iniciao Biblioteca Date
+
+        var data = new Date("11/23/1987"); //Pega a data do computador
+
+        console.log("Data atual do micro ",data);
+        console.log("Dia: ", data.getDate());
+        console.log("Mes: ",data.getMonth()+1);
+        console.log("Ano: ",data.getFullYear());
+        console.log("Hora: ",data.getHours());
+        console.log("Minuto: ",data.getMinutes());
+        console.log("Segundos: ",data.getSeconds());
+        console.log("Dia da semana: ",data.getDay());
+
+         //Fim Biblioteca Date
+
+
+         //Iniciao Biblioteca jquery
+
+         $("h1").css("color","red");
+         $("h1").css({
+            "color": "blue",
+            "font-family": "Algerian Regular",
+            "font-size":"100px",
+            "text-align": "center"
+         })
+    </script>
+</body>
+</html>
