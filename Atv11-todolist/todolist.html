@@ -20,6 +20,17 @@
     <ul class="list-group mb-3" id="listaTarefas"></ul>
 
     <p class="text-end fw-bold">Total de tarefas: <span id="contador">0</span></p>
+
+
+    <div class="d-flex justify-content-between mt-4">
+       <div class="uploud-area">
+          <input type="file" name="upload" id="upload" accept=".json" class="d-none" onchange="uploadJson(event)">
+          <button id="btnUpload" class="btn btn-success" onclick="document.getElementById('upload').click()">Enviar Arquivo</button>
+          
+       </div>
+       <button id="btnDownload" class="btn btn-info" onclick="downloadJson()">Download Arquivo</button>
+    </div>
+
   </div>
 
   <script>
@@ -42,39 +53,151 @@
       tarefas.push(texto);
       input.value = "";
 
-      atulizarLista();
+      atualizarLista();
     }
 
-    function removerTarefas(){
+    function removerTarefas(item){
+      tarefas.splice(item,1); //remove o item da lista e posição e quantas casas
+      atualizarLista();
+    }
+
+    function alterTarefas(item){
+      let tarefaEditada = prompt("Editar a Tarefa: ",tarefas[item]); //abre a caixa de texto com item a editar
+     
+      if (tarefaEditada.trim() ==""){   //verifica se valor digitado e  vazio
+        alert("O texto não pode ser Vazio!!");
+      }
+
+      if (tarefas.includes(tarefaEditada)){ //verifica se o valor esta na lista ja
+        alert("Já existe um tarefa com essa descrição!!");
+      }
+
+      tarefas[item] = tarefaEditada; // edita na posição do item o texto informado
       
-      atulizarLista();
+      atualizarLista();
     }
 
-    function alterTarefas(){
-      atulizarLista();
-    }
-
-    function atulizarLista(){
+    function atualizarLista(){
        let lista = document.getElementById("listaTarefas");
-       lista.innerHTML ="";
+       lista.innerHTML =""; //limpa lista
        for (let i= 0;i < tarefas.length;i++){
           let item = document.createElement("li");
           item.className = "list-group-item";
           item.innerHTML =  `
                               ${tarefas[i]}
                               <div class="float-end"> 
-                                 <button class="btn btn-sm btn-warning" onclick="alterTarefas()">Editar</button> 
-                                 <button class="btn btn-sm btn-danger" onclick="removerTarefas()">Excluir</button> 
+                                 <button class="btn btn-sm btn-warning" onclick="alterTarefas(${i})">Editar</button> 
+                                 <button class="btn btn-sm btn-danger" onclick="removerTarefas(${i})">Excluir</button> 
                               </div>  
                             `;
       lista.appendChild(item);
        }
+       atualizarContador();
+       salvarLocalStorege();
+       atualizarBotoes();
     }
 
     function atualizarContador(){
-      
+      document.getElementById("contador").textContent = tarefas.length;
     }
 
+
+    //local storege grava e nao apaga somente quando limpar hostorio ou 
+    //desinstala o navegador
+    function salvarLocalStorege(){
+      localStorage.setItem("tarefas",JSON.stringify(tarefas));
+    }
+
+    function carregarLocalStorege(){
+      let dados = localStorage.getItem("tarefas");
+      if (dados){
+        tarefas = JSON.parse(dados);
+      }
+      atualizarLista();
+    }
+
+
+    function atualizarBotoes(){
+      let btnUpload = document.getElementById("btnUpload");
+      let btnDownload = document.getElementById("btnDownload");
+      if (tarefas.length > 0){
+        btnDownload.disabled = false;
+        btnUpload.disabled   = true;
+      }
+      else{
+        btnDownload.disabled = true;
+        btnUpload.disabled   = false;
+      }
+    }
+
+    function downloadJson(){
+      if (tarefas.length == 0){
+        alert("Não existem tarefas para ser baixadas!!");
+        return;
+      }
+
+      let dataStr = JSON.stringify(tarefas);
+       //cria arquivo temporario
+      let blob = new Blob([dataStr], {type: "application/json"});
+      let url  = URL.createObjectURL(blob);
+      //cria link para baixa
+      let link  = document.createElement("a");
+      link.href = url;
+      link.download = "tarefas.json";
+
+      link.click();
+      //remove lind e url arquivo
+      URL.revokeObjectURL(url);
+      link.remove();
+    }
+
+    function uploadJson(arquivo){
+      let file = arquivo.target.files[0];
+
+      if (!file){
+        alert("Aquivo inxistente!!");
+        return;
+      }
+
+      let reader = new FileReader();
+      
+      reader.onload = function (e){
+        try{
+          let dados = JSON.parse(e.target.result);
+
+          if (!Array.isArray(dados)){
+            alert("Arquivo Json Inválido!!");
+            return;
+          }
+
+          for (let tarefa of dados){
+            if (typeof tarefa != "string"){
+              alert("Arquivo Json Inválido, todas tarefaz precisam ser texto!!");
+              return;
+            }
+          }
+
+          if (tarefas.length > 0 ){
+            alert("Para fazer o upload, a lista precisa estar vazia!!");
+            return;
+          }
+
+          tarefas = dados;
+          atualizarLista();
+
+        }catch(error){
+          alert("Erro ao processar o aquivo JSON!!"+ error.message);
+        }
+      }
+      
+      reader.readAsText(file);
+      arquivo.target.value = "";
+
+    }
+
+    //session historige grava apaga quando fecha o navegador
+    atualizarBotoes();
+    carregarLocalStorege();
 
   </script>
 
