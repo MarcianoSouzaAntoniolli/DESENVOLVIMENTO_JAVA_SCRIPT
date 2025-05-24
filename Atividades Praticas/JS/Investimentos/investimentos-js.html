@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Investimentos</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input { margin: 5px; padding: 5px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+  </style>
+</head>
+<body>
+
+  <h2>Simulador de Investimentos</h2>
+
+  <input type="number" id="valorInicial" placeholder="Valor Inicial (R$) 1234,56">
+  <input type="number" id="taxa" placeholder="Taxa ao mês (%)">
+  <input type="number" id="meses" placeholder="Período (meses)">
+  <button onclick="simular()">Simular</button>
+
+  <h3>Resultados:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Mês</th><th>Valor Acumulado</th>
+      </tr>
+    </thead>
+    <tbody id="resultado"></tbody>
+  </table>
+
+  <script>
+    function simular() {
+      let valorInicial = parseFloat(document.getElementById("valorInicial").value);
+      let taxa = parseFloat(document.getElementById("taxa").value) / 100;
+      let meses = parseInt(document.getElementById("meses").value);
+
+      if (isNaN(valorInicial) || isNaN(taxa) || isNaN(meses)) {
+        alert("Preencha todos os campos corretamente.");
+        return;
+      }
+
+      let resultadoHTML = "";
+      let montante = valorInicial;
+
+      for (let i = 1; i <= meses; i++) {
+        //montante = montante + (montante * taxa);
+        montante *= (1 + taxa); // o 1  representa o valor do montante inicial
+        resultadoHTML += `<tr><td>${i}</td><td>R$ ${montante.toFixed(2)}</td></tr>`;
+      }
+
+      document.getElementById("resultado").innerHTML = resultadoHTML;
+    }
+  </script>
+
+</body>
+</html>
