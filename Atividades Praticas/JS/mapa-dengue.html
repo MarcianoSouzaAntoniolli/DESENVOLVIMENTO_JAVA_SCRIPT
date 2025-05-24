@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa de Focos da Dengue</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    #map { height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    let dados = JSON.parse(localStorage.getItem("locais")) || [];
+
+    let map = L.map('map');
+
+    let mosquitoIcon = L.icon({
+      iconUrl: 'aedes.png', 
+      iconSize: [40, 40],
+      iconAnchor: [15, 30],
+      popupAnchor: [0, -30]
+    });
+
+    if (dados.length > 0) {
+      let grupo = [];
+
+      dados.forEach(foco => {
+        let marker = L.marker([foco.lat, foco.long], { icon: mosquitoIcon })
+          .addTo(map)
+           .bindPopup(`<strong>${foco.local || "Foco da dengue"}</strong><br>${foco.rua}, ${foco.numero}<br>${foco.bairro}, ${foco.cidade} - ${foco.estado}<br>CEP: ${foco.cep}`);
+
+        grupo.push(marker.getLatLng());
+      });
+
+      let bounds = L.latLngBounds(grupo);
+      map.fitBounds(bounds, { padding: [50, 50] });
+    } else {
+
+      map.setView([-23.5, -46.6], 10);
+    }
+
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+  </script>
+</body>
+</html>

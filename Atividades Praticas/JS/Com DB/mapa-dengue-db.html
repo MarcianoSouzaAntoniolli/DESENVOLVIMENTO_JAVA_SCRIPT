@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa de Focos da Dengue</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+  <script>
+
+    let dados = [];
+    let db;
+
+    let map = L.map('map');
+
+    let mosquitoIcon = L.icon({
+      iconUrl: 'aedes.png',
+      iconSize: [40, 40],
+      iconAnchor: [15, 30],
+      popupAnchor: [0, -30]
+    });
+
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+
+    initSqlJs({ locateFile: filename => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${filename}` })
+      .then(SQL => {
+        fetch('banco.sqlite')
+          .then(response => response.arrayBuffer())
+          .then(buffer => {
+            db = new SQL.Database(new Uint8Array(buffer));
+            listarLocais(); 
+          })
+          .catch(err => {
+            console.error("Erro ao carregar banco:", err);
+          });
+      });
+
+
+    function listarLocais() {
+      try {
+        let res = db.exec("SELECT * FROM locais");
+        if (res.length > 0) {
+          let rows = res[0].values;
+          dados = rows.map(row => ({
+            id: row[0],
+            local: row[1],
+            lat: row[2],
+            long: row[3],
+            cep: row[4],
+            rua: row[5],
+            numero: row[6],
+            bairro: row[7],
+            cidade: row[8],
+            estado: row[9],
+
+          }));
+
+
+          let grupo = [];
+
+          dados.forEach(foco => {
+            let marker = L.marker([foco.lat, foco.long], { icon: mosquitoIcon })
+              .addTo(map)
+              .bindPopup(`<strong>${foco.local || "Foco da dengue"}</strong><br>${foco.rua}, ${foco.numero}<br>${foco.bairro}, ${foco.cidade} - ${foco.estado}<br>CEP: ${foco.cep}`);
+            grupo.push(marker.getLatLng());
+          });
+
+          let bounds = L.latLngBounds(grupo);
+          map.fitBounds(bounds, { padding: [50, 50] });
+
+        } else {
+          console.log("Nenhum dado encontrado.");
+          map.setView([-23.5, -46.6], 10);
+        }
+      } catch (e) {
+        console.error("Erro na consulta:", e);
+        map.setView([-23.5, -46.6], 10);
+      }
+    }
+  </script>
+
+  </script>
+</body>
+
+</html>

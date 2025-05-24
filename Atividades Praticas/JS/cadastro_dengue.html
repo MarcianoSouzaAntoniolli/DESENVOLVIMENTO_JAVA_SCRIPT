@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Localizações de Focos da Dengue</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="p-4">
+  <div class="container-fluid">
+    <h2 class="mb-4">📋 Cadastro de Localizações de Focos da Dengue</h2>
+
+    <form id="formLocal">
+      <input type="hidden" id="indice">
+      <input type="hidden" id="lat">
+      <input type="hidden" id="long">
+
+      <div class="row mb-2">
+        <div class="col">
+          <input type="text" id="local" class="form-control" placeholder="Local" required>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-3">
+          <input type="text" id="cep" class="form-control" placeholder="CEP" required>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-secondary w-100" onclick="buscarCEP()">Buscar CEP</button>
+        </div>
+        <div class="col-md-7">
+          <input type="text" id="rua" class="form-control" placeholder="Rua" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-2">
+          <input type="text" id="numero" class="form-control" placeholder="Número" required>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="bairro" class="form-control" placeholder="Bairro" required>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="cidade" class="form-control" placeholder="Cidade" required>
+        </div>
+        <div class="col-md-2">
+          <input type="text" id="estado" class="form-control" placeholder="Estado" required>
+        </div>
+      </div>
+
+      <button class="btn btn-success" type="button" onclick="salvarLocal()">Salvar</button>
+      <a href="mapa-dengue.html" target="_blank" class="btn btn-primary ms-2">Ver Mapa</a>
+    </form>
+
+    <hr>
+
+    <h4 class="mt-4">👥 Locais Cadastrados</h4>
+    <div class="table-responsive">
+      <table class="table table-bordered mt-2">
+        <thead>
+          <tr>
+            <th>Local</th>
+            <th>CEP</th>
+            <th>Rua</th>
+            <th>nº</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaLocais"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+
+
+    let locais = JSON.parse(localStorage.getItem('locais')) || [];
+
+    async function salvarLocal() {
+      if (document.getElementById('local').value === "") {
+        alert("O campo local é obrigatório.");
+        return;
+      }
+
+      let rua = document.getElementById('rua').value;
+      let numero = document.getElementById('numero').value;
+      let cidade = document.getElementById('cidade').value;
+      let estado = document.getElementById('estado').value;
+      let cep = document.getElementById('cep').value;
+
+      let endereco = `${rua}, ${numero}, ${cidade}-${estado}, ${cep}`;
+
+      let coordenadas = await buscarCoordenadas(endereco);
+
+      let local = {
+        local: document.getElementById('local').value,
+        cep: cep,
+        rua: rua,
+        numero: numero,
+        bairro: document.getElementById('bairro').value,
+        cidade: cidade,
+        estado: estado,
+        lat: coordenadas ? coordenadas.latitude : '',
+        long: coordenadas ? coordenadas.longitude : ''
+      };
+
+      let indice = document.getElementById('indice').value;
+
+      if (indice === "") {
+        locais.push(local);
+      } else {
+        locais[indice] = local;
+      }
+
+      localStorage.setItem('locais', JSON.stringify(locais));
+      document.getElementById('formLocal').reset();
+      document.getElementById('indice').value = "";
+      listarLocals();
+    }
+
+
+    function buscarCEP() {
+      let cep = document.getElementById('cep').value;
+
+      fetch(`https://viacep.com.br/ws/${cep}/json/`) 
+        .then(res => res.json()) 
+        .then(dados => { 
+
+          if (dados.erro) {
+            alert("CEP não encontrado.");
+            if (document.getElementById('indice').value !== "") {
+              document.getElementById('cep').value = locais[document.getElementById('indice').value].cep;
+            }
+            return;
+          }
+
+          document.getElementById('rua').value = dados.logradouro;
+          document.getElementById('bairro').value = dados.bairro;
+          document.getElementById('cidade').value = dados.localidade;
+          document.getElementById('estado').value = dados.uf;
+
+        })
+        .catch(() => alert("Erro ao buscar o CEP.")); 
+    }
+
+    function listarLocals() {
+      let tbody = document.getElementById('tabelaLocais');
+      tbody.innerHTML = "";
+
+      for (let i = 0; i < locais.length; i++) {
+        let u = locais[i];
+        let tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${u.local}</td>
+          <td>${u.cep}</td>
+          <td>${u.rua}</td>
+          <td>${u.numero}</td>
+          <td>${u.bairro}</td>
+          <td>${u.cidade}</td>
+          <td>${u.estado}</td>
+          <td>
+            <button class="btn btn-sm btn-warning" onclick="editarLocal(${i})">Editar</button>
+            <button class="btn btn-sm btn-danger" onclick="excluirLocal(${i})">Excluir</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function editarLocal(i) {
+      let u = locais[i];
+      document.getElementById('local').value = u.local;
+      document.getElementById('cep').value = u.cep;
+      document.getElementById('rua').value = u.rua;
+      document.getElementById('numero').value = u.numero;
+      document.getElementById('bairro').value = u.bairro;
+      document.getElementById('cidade').value = u.cidade;
+      document.getElementById('estado').value = u.estado;
+      document.getElementById('lat').value = u.lat;
+      document.getElementById('long').value = u.long;
+      document.getElementById('indice').value = i;
+    }
+
+    function excluirLocal(i) {
+      if (confirm("Deseja realmente excluir este local?")) {
+        locais.splice(i, 1);
+        localStorage.setItem('locais', JSON.stringify(locais));
+        listarLocals();
+      }
+    }
+
+
+    function buscarCoordenadas(endereco) {
+      let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(endereco)}`;
+
+      return fetch(url, {
+        method: "GET",
+        headers: {
+          "User-Agent": "SeuAppExemplo/1.0 (seu-email@exemplo.com)",
+          "Accept-Language": "pt-BR"
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(dados => {
+          if (dados.length > 0) {
+            let { lat, lon } = dados[0];
+            console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+            return { latitude: lat, longitude: lon };
+          } else {
+            console.warn("Endereço não encontrado.");
+            return null;
+          }
+        })
+        .catch(erro => {
+          console.error("Erro ao buscar coordenadas:", erro.message);
+          return null;
+        });
+    }
+
+
+
+    listarLocals();
+  </script>
+</body>
+
+</html>

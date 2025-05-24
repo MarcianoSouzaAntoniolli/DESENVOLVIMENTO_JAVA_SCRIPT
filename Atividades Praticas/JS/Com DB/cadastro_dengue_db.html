@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Focos de Dengue</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body class="p-4">
+  <div class="container-fluid">
+    <h2 class="mb-4">📋 Cadastro de Localizações de Focos da Dengue com DB</h2>
+
+    <form id="formLocal">
+      <input type="hidden" id="indice">
+      <input type="hidden" id="lat">
+      <input type="hidden" id="long">
+
+      <div class="row mb-2">
+        <div class="col">
+          <input type="text" id="local" class="form-control" placeholder="Local" required>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col-md-3">
+          <input type="text" id="cep" class="form-control" placeholder="CEP" required>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-secondary w-100" onclick="buscarCEP()">Buscar CEP</button>
+        </div>
+        <div class="col-md-7">
+          <input type="text" id="rua" class="form-control" placeholder="Rua" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-2">
+          <input type="text" id="numero" class="form-control" placeholder="Número" required>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="bairro" class="form-control" placeholder="Bairro" required>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="cidade" class="form-control" placeholder="Cidade" required>
+        </div>
+        <div class="col-md-2">
+          <input type="text" id="estado" class="form-control" placeholder="Estado" required>
+        </div>
+      </div>
+
+      <button class="btn btn-success" type="button" onclick="salvarLocal()">Salvar</button>
+      <a href="mapa-dengue-db.html" class="btn btn-primary ms-2">Ver Mapa</a>
+    </form>
+
+    <hr>
+
+    <h4 class="mt-4">👥 Locais Cadastrados</h4>
+    <div class="table-responsive">
+      <table class="table table-bordered mt-2">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Local</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>CEP</th>
+            <th>Rua</th>
+            <th>nº</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaLocais"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <button class="btn btn-secondary" onclick="salvarBanco()">Salvar banco .sqlite</button>
+  <input class="btn btn-secondary" type="file" id="arquivoBanco" onchange="carregarBanco()">
+
+  <script>
+    let db;
+    initSqlJs({ locateFile: filename => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${filename}` })
+      .then(SQL => {
+        db = new SQL.Database();
+        db.run(`CREATE TABLE IF NOT EXISTS locais (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        local TEXT, lat TEXT, long TEXT, cep TEXT, rua TEXT, numero TEXT, bairro TEXT,
+        cidade TEXT, estado TEXT
+      )`);
+        listarLocais();
+      });
+
+    function buscarCEP() {
+      let cep = document.getElementById('cep').value;
+
+      fetch(`https://viacep.com.br/ws/${cep}/json/`) 
+        .then(res => res.json()) 
+        .then(dados => { 
+          if (dados.erro) {
+            alert("CEP não encontrado.");
+            if (document.getElementById('indice').value !== "") {
+              document.getElementById('cep').value = locais[document.getElementById('indice').value].cep;
+            }
+            return;
+          }
+
+          document.getElementById('rua').value = dados.logradouro;
+          document.getElementById('bairro').value = dados.bairro;
+          document.getElementById('cidade').value = dados.localidade;
+          document.getElementById('estado').value = dados.uf;
+
+        })
+        .catch(() => alert("Erro ao buscar o CEP.")); 
+    }
+
+    async function salvarLocal() {
+      if (document.getElementById('local').value === "") {
+        alert("O campo local é obrigatório.");
+        return;
+      }
+
+      let rua = document.getElementById('rua').value;
+      let numero = document.getElementById('numero').value;
+      let cidade = document.getElementById('cidade').value;
+      let estado = document.getElementById('estado').value;
+      let cep = document.getElementById('cep').value;
+
+      let endereco = `${rua}, ${numero}, ${cidade}-${estado}, ${cep}`;
+
+      let coordenadas = await buscarCoordenadas(endereco);
+
+      let dados = [
+        document.getElementById('local').value,
+        coordenadas ? coordenadas.latitude : '',
+        coordenadas ? coordenadas.longitude : '',
+        cep,
+        rua,
+        numero,
+        document.getElementById('bairro').value,
+        cidade,
+        estado
+      ];
+
+      let id = document.getElementById('indice').value;
+
+      if (id) {
+        db.run(`UPDATE locais SET local=?, lat=?, long=?, cep=?, rua=?, numero=?, bairro=?, cidade=?, estado=? WHERE id=?`, [...dados, id]);
+      } else {
+        db.run(`INSERT INTO locais (local, lat, long, cep, rua, numero, bairro, cidade, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, dados);
+      }
+
+
+      listarLocais();
+      document.getElementById('formLocal').reset();
+      document.getElementById('indice').value = "";
+    }
+
+    function buscarCoordenadas(endereco) {
+      let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(endereco)}`;
+
+      return fetch(url, {
+        method: "GET",
+        headers: {
+          "User-Agent": "SeuAppExemplo/1.0 (seu-email@exemplo.com)",
+          "Accept-Language": "pt-BR"
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(dados => {
+          if (dados.length > 0) {
+            let { lat, lon } = dados[0];
+            console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+            return { latitude: lat, longitude: lon };
+          } else {
+            console.warn("Endereço não encontrado.");
+            return null;
+          }
+        })
+        .catch(erro => {
+          console.error("Erro ao buscar coordenadas:", erro.message);
+          return null;
+        });
+    }
+
+
+    function listarLocais() {
+      let res = db.exec("SELECT * FROM locais");
+      let tbody = document.querySelector('#tabelaLocais');
+      tbody.innerHTML = "";
+
+      if (res.length > 0) {
+        res[0].values.forEach(row => {
+          let tr = document.createElement("tr");
+          row.forEach(col => {
+            let td = document.createElement("td");
+            td.textContent = col;
+            tr.appendChild(td);
+          });
+          let id = row[0];
+          let tdAcoes = document.createElement("td");
+          tdAcoes.innerHTML = `
+            <button class="btn btn-sm btn-warning" onclick="editarLocal(${id})">Editar</button>
+            <button class="btn btn-sm btn-danger" onclick="excluirLocal(${id})">Excluir</button>
+          `;
+          tr.appendChild(tdAcoes);
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    function editarLocal(id) {
+      let res = db.exec(`SELECT * FROM locais WHERE id=${id}`);
+      if (res.length > 0) {
+        let row = res[0].values[0];
+        document.getElementById('indice').value = row[0];
+        document.getElementById('local').value = row[1];
+        document.getElementById('lat').value = row[2];
+        document.getElementById('long').value = row[3];
+        document.getElementById('cep').value = row[4];
+        document.getElementById('rua').value = row[5];
+        document.getElementById('numero').value = row[6];
+        document.getElementById('bairro').value = row[7];
+        document.getElementById('cidade').value = row[8];
+        document.getElementById('estado').value = row[9];
+      }
+    }
+
+    function excluirLocal(id) {
+      db.run(`DELETE FROM locais WHERE id=?`, [id]);
+      listarLocais();
+    }
+
+    function salvarBanco() {
+      let data = db.export();
+      let blob = new Blob([data], { type: "application/octet-stream" });
+      let url = window.URL.createObjectURL(blob);
+      let a = document.createElement("a");
+      a.href = url;
+      a.download = "banco_dengue.sqlite";
+      a.click();
+    }
+
+    function carregarBanco() {
+      let input = document.getElementById('arquivoBanco');
+      let file = input.files[0];
+      let reader = new FileReader();
+      reader.onload = function () {
+        let uInt8Array = new Uint8Array(reader.result);
+        initSqlJs({ locateFile: filename => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${filename}` })
+          .then(SQL => {
+            db = new SQL.Database(uInt8Array);
+            listarLocais();
+          });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  </script>
+</body>
+
+</html>
